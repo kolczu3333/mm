@@ -2,35 +2,17 @@
 
 namespace App\Service\Normalizer;
 
+use App\Dto\ProductDto;
+
 class ProductNormalizer
 {
-    public function normalize(array $product): array
+    public function normalize(array $product): ProductDto
     {
-        return [
-            'externalId' => $this->sanitizeExternalId($data['externalId'] ?? ''),
-            'name' => $this->sanitizeName($data['name']?? ''),
-            'price' => $this->sanitizePrice($data['price']?? 0),
-            'stock' => $this->sanitizeStock($data['stock']?? 0)
-        ];
-    }
-
-    private function sanitizeExternalId(string $externalId): string
-    {
-        return trim($externalId);
-    }
-
-    private function sanitizeName(mixed $name): string
-    {
-        return trim(strip_tags($name));
-    }
-
-    private function sanitizePrice(mixed $price)
-    {
-        return max(0, (float) str_replace(',', '.', $price));
-    }
-
-    private function sanitizeStock(mixed $stock): int
-    {
-        return max(0, (int) $stock);
+        return new ProductDto(
+            externalId: trim($product['externalId'] ?? ''),
+            name: trim(strip_tags($product['name'] ?? '')),
+            price: max(0, (float) str_replace(',', '.', $product['price'] ?? 0)),
+            stock: max(0, (int) $product['stock'])
+        );
     }
 }

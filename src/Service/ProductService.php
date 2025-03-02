@@ -23,15 +23,15 @@ readonly class ProductService
         $products = $importer->fetchProducts();
 
         foreach ($products as $data) {
-            $normalizedData = $this->normalizer->normalize($data);
-            $product = $this->productRepository->findByExternalId($normalizedData['externalId']);
+            $normalizedProductDto = $this->normalizer->normalize($data);
+            $product = $this->productRepository->findByExternalId($normalizedProductDto->externalId);
 
             if (!$product) {
                 $product = new Product();
-                $product->setExternalId($normalizedData['externalId']);
-                $product->setName($normalizedData['name']);
-                $product->setPrice($normalizedData['price']);
-                $product->setStock($normalizedData['stock']);
+                $product->setExternalId($normalizedProductDto->externalId);
+                $product->setName($normalizedProductDto->name);
+                $product->setPrice($normalizedProductDto->price);
+                $product->setStock($normalizedProductDto->stock);
 
                 $this->productRepository->save($product);
             } else {

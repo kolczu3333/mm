@@ -2,12 +2,13 @@
 
 namespace App\Tests\Service\Normalizer;
 
+use App\Dto\ProductDto;
 use App\Service\Normalizer\ProductNormalizer;
 use PHPUnit\Framework\TestCase;
 
 class ProductNormalizerTest extends TestCase
 {
-    public function testFetchProducts(): void
+    public function testNormalize(): void
     {
         $normalizer = new ProductNormalizer();
 
@@ -18,13 +19,12 @@ class ProductNormalizerTest extends TestCase
             'stock' => '-5'
         ];
 
-        $expectedOutput = [
-            'externalId' => '111',
-            'name' => 'Test',
-            'price' => 100.99,
-            'stock' => 0
-        ];
+        $dto = $normalizer->normalize($inputData);
 
-        $this->assertEquals($expectedOutput, $normalizer->normalize($inputData));
+        $this->assertInstanceOf(ProductDto::class, $dto);
+        $this->assertEquals('111', $dto->externalId);
+        $this->assertEquals('Test', $dto->name);
+        $this->assertEquals(100.99, $dto->price);
+        $this->assertEquals(0, $dto->stock);
     }
 }
