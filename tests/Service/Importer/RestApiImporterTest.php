@@ -54,7 +54,7 @@ class RestApiImporterTest extends TestCase
             ->method('request')
             ->willReturn($responseMock);
 
-        $restApiImporter = new RestApiImporter($httpClient, $logger);
+        $restApiImporter = new RestApiImporter($httpClient, $logger, 'https://example.com/products');
         $products = $restApiImporter->fetchProducts();
         $this->assertIsArray($products);
         $this->assertCount(2, $products);

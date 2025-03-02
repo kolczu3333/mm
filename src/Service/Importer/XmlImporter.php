@@ -16,12 +16,10 @@ readonly class XmlImporter implements ImporterInterface
     {
         try {
             $xml = simplexml_load_file($this->xmlFilePath);
-            if ($xml === false) {
-                throw new Exception('Nie udało się wczytać pliku XML.');
-            }
             if (!$xml) {
                 throw new Exception('Nie udało się wczytać pliku XML.');
             }
+
             $products = [];
 
             foreach ($xml->product as $product) {

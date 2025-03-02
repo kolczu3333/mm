@@ -14,7 +14,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 readonly class RestApiImporter implements ImporterInterface
 {
-    public function __construct(private HttpClientInterface $httpClient, private LoggerInterface $logger)
+    public function __construct(private HttpClientInterface $httpClient, private LoggerInterface $logger, private string $apiUrl)
     {
     }
 
@@ -28,7 +28,7 @@ readonly class RestApiImporter implements ImporterInterface
     public function fetchProducts(): array
     {
         try {
-            $response = $this->httpClient->request('GET', 'https://api.example.com/products');
+            $response = $this->httpClient->request('GET', $this->apiUrl);
 
             return $response->toArray();
         } catch (Exception $e) {

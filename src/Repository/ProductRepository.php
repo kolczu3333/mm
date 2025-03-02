@@ -39,7 +39,7 @@ readonly class ProductRepository
         }
     }
 
-    public function findByExternalId(string $externalId):?Product
+    public function findByExternalId(string $externalId): ?Product
     {
         $query = $this->em->createQuery(
             'SELECT p FROM App\Entity\Product p where p.externalId = :externalId'
